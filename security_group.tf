@@ -11,16 +11,22 @@ resource "aws_security_group" "ecs-fargate-deployment" {
 resource "aws_security_group_rule" "ecs-fargate-deployment-ingress" {
   type              = "ingress"
   security_group_id = aws_security_group.ecs-fargate-deployment.id
-
-  
   count = length(var.sg_ingress_rules)
   from_port         = var.sg_ingress_rules[count.index].from_port
   to_port           = var.sg_ingress_rules[count.index].to_port
   protocol          = var.sg_ingress_rules[count.index].protocol
-  cidr_blocks        = [var.sg_ingress_rules[count.index].cidr_block]
+  //cidr_blocks        = [var.sg_ingress_rules[count.index].cidr_block]
   description       = var.sg_ingress_rules[count.index].description
-  //self = var.sg_ingress_rules[count.index].self
+  self = var.sg_ingress_rules[count.index].self
+}
 
+resource "aws_security_group_rule" "ecs-fargate-deployment-ingress-80" {
+  type              = "ingress"
+  security_group_id = aws_security_group.ecs-fargate-deployment.id
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "ecs-fargate-deployment-egress" {
