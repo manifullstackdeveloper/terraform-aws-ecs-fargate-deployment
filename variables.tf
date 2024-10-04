@@ -4,6 +4,17 @@ variable "domain_name" {
   default = "yourdomain.com"
 }
 
+
+variable "infrastructure_version" {
+  type        = number
+  default = 1
+}
+
+variable "environment" {
+  type        = string
+  default = "dev"
+}
+
 variable "vpc_cidr" {
   type        = string
   description = "The IP range to use for the VPC"
@@ -33,9 +44,6 @@ variable "aws_availability_zones" {
   default     = ["us-west-2a", "us-west-2b"]
 }
 
-variable "infrastructure_version" {
-  default = "1"
-}
 
 variable "ecs-task-name" {
   description = "image-location"
@@ -46,7 +54,7 @@ variable "ecs-task-name" {
 variable "image-location" {
   description = "image-location"
   type = string
-  default = "*******.dkr.ecr.regin.amazonaws.com/#######"
+  default = "*******.dkr.ecr.******.amazonaws.com/image-location"
 }
 
 variable "health_check_path" {
@@ -119,14 +127,6 @@ variable "sg_ingress_rules" {
       self = bool
     }))
     default     = [
-        {
-          from_port   = 80
-          to_port     = 80
-          protocol    = "tcp"
-          cidr_block  = "0.0.0.0/0"
-          description = "port-80"
-          self = false
-        },
         {
           from_port   = 8080
           to_port     = 8080
