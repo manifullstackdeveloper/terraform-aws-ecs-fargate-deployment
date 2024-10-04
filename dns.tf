@@ -4,7 +4,7 @@ data "aws_route53_zone" "ecs-fargate-deployment" {
 
 resource "aws_route53_record" "ecs-fargate-deployment" {
   zone_id = data.aws_route53_zone.ecs-fargate-deployment.zone_id
-  name    = "v${var.infrastructure_version}.${var.domain_name}"
+  name    = "v${var.infrastructure_version}-${var.environment}.${var.domain_name}"
   type    = "A"
 
   alias {
